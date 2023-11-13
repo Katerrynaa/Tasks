@@ -2,15 +2,15 @@
 
 install:
     @pip install -r requirements.txt
-	@echo "-dependencies installed"
+    @echo "-dependencies installed"
 	
 run:
     @python main.py
-	@echo "-server is running"
+    @echo "-server is running"
 
 format:
-    @black .
-	@echo "-code is formatted with black"
+    @black main.py.
+    @echo "-code is formatted with black"
 
-	@ruff .
-	@echo "-code is formatted with ruff"
+    @ruff main.py.
+    @echo "-code is formatted with ruff"
