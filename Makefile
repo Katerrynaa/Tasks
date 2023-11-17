@@ -1,8 +1,12 @@
-.PHONY: install run format
+.PHONY: install run format lint
 
 install:
     @pip install -r requirements.txt
+    @python -m pip install --upgrade pip
     @echo "-dependencies installed"
+
+test:
+    @pip install pytest
 	
 run:
     @python main.py
@@ -14,3 +18,14 @@ format:
 
     @ruff main.py.
     @echo "-code is formatted with ruff"
+
+clean:
+    @pip uninstall -y -r requirements.txt
+    @rm -rf .pytest_cache
+    @find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
+    @echo "-cleaned up"
+
+lint:
+    @flake8 main.py
+    @pylint main.py
+    @echo "-linting complete"
