@@ -30,7 +30,7 @@ lint: .venv/bin/flake8
     @echo "-linted flake8"
 
     @.venv/bin/pylint main.py
-    @echo "-linted with pylint"
+    @echo "-linted pylint"
 
 .venv/bin/flake8:
     pip install -U flake8
