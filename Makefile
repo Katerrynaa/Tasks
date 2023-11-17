@@ -13,7 +13,7 @@ run:
     @echo "-server is running"
 
 format:
-    @black main.py.
+    @black main.py
     @echo "-code is formatted with black"
 
     @ruff main.py.
@@ -25,7 +25,15 @@ clean:
     @find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
     @echo "-cleaned up"
 
-lint:
-    @flake8 main.py
-    @pylint main.py
-    @echo "-linting complete"
+lint: .venv/bin/flake8
+    @.venv/bin/flake8 main.py
+    @echo "-linted flake8"
+
+    @.venv/bin/pylint main.py
+    @echo "-linted with pylint"
+
+.venv/bin/flake8:
+    pip install -U flake8
+
+.venv/bin/pylint:
+    pip install -U pylint
