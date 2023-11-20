@@ -1,6 +1,6 @@
+black==23.11.0
 fastapi==0.104.1
 FastAPI-SQLAlchemy==0.2.1
 python-dotenv==1.0.0
-SQLAlchemy==2.0.23
 ruff==0.1.6
-black==23.11.0
+SQLAlchemy==2.0.23
