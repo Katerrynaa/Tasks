@@ -24,16 +24,3 @@ clean:
     @rm -rf .pytest_cache
     @find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
     @echo "-cleaned up"
-
-lint: .venv/bin/flake8
-    @.venv/bin/flake8 main.py
-    @echo "-linted flake8"
-
-    @.venv/bin/pylint main.py
-    @echo "-linted pylint"
-
-.venv/bin/flake8:
-    pip install -U flake8
-
-.venv/bin/pylint:
-    pip install -U pylint
