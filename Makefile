@@ -1,4 +1,4 @@
-.PHONY: install run format
+.PHONY: install run format test
 
 install:
     @pip install -r requirements.txt
