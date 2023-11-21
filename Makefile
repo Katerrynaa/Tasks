@@ -1,21 +1,19 @@
 .PHONY: install run format test
 
 install:
-    @pip install -r requirements.txt
-    @python -m pip install --upgrade pip
-    @echo "-dependencies installed"
+	pip install -r requirements.txt
+	python -m pip install --upgrade pip
+	echo "-dependencies installed"
 
 test:
-    pytest 
-	
+	pytest
+
 run:
-    @python main.py
-    @echo "-server is running"
+	uvicorn main:app --reload
+	echo "-server is running"
 
 format:
-    @black main.py
-    @echo "-code is formatted with black"
-
-    @ruff main.py
-    @echo "-code is formatted with ruff"
-
+	black .
+	echo "-code is formatted with black"
+	ruff .
+	echo "-code is formatted with ruff"

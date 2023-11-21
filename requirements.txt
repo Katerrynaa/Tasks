@@ -4,3 +4,4 @@ FastAPI-SQLAlchemy==0.2.1
 python-dotenv==1.0.0
 ruff==0.1.6
 SQLAlchemy==2.0.23
+uvicorn>=0.24.0
