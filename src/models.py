@@ -5,7 +5,6 @@ from sqlalchemy.orm import sessionmaker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False)
 Base = declarative_base()
 
-
 class Department(Base):
     __tablename__ = "departments"
 
