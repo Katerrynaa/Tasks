@@ -1,20 +1,16 @@
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import Depends, HTTPException, APIRouter
+# from sqlalchemy.orm import session
 from src.models import SessionLocal
 from src.models import Department
 
-app = FastAPI()
+router = APIRouter(prefix="/departments")
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        pass
-
-
-def insert_data(db: Session):
+def insert_data(db):
+    # todo: move it to managers.py
+    #  get data from request body (remove hardcoded values)
+    #  Department manager should be a separate class (DepartmentManager.insert_data(body))
+    #  remove session from this file
     department_data = [
         {"title": "HR", "country_name": "Norway"},
         {"title": "IT Support", "country_name": "Sweden"},
@@ -28,22 +24,26 @@ def insert_data(db: Session):
         db.commit()
 
 
-@app.put("/departments")
-def push_info():
-    with SessionLocal() as session:
-        insert_data(session)
-        return {"Data added successfully"}
+@router.post("/")
+def push_info(*args, **kwargs):  # rename method please
+    print("Hey there")
+    print(args)
+    print(kwargs)
+    # DepartmentManager.insert_data(body)
+    # with SessionLocal() as session:
+    #     insert_data(session)
+    #     return {"Data added successfully"}
 
 
-@app.get("/departments", name="get_departments")
-def read_depart(db: Session = Depends(get_db)):
-    departments = db.query(Department).all()
-    if not departments:
-        raise HTTPException(status_code=404, detail="Departments table not found")
-    return departments
+# @router.get("/", name="get_departments")
+# def read_depart(db: Session = Depends(get_db)):
+#     departments = db.query(Department).all()
+#     if not departments:
+#         raise HTTPException(status_code=404, detail="Departments table not found")
+#     return departments
 
 
-@app.get("/departments/{department_id}")
-def get_id(department_id: int, db: Session = Depends(get_db)):
-    departments = db.query(Department).filter(Department.id == department_id).all()
-    return {"department_id": departments}
+# @router.get("/{department_id}")
+# def get_id(department_id: int, db: Session = Depends(get_db)):
+#     departments = db.query(Department).filter(Department.id == department_id).all()
+#     return {"department_id": departments}
