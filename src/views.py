@@ -5,6 +5,7 @@ from src.models import Department
 
 app = FastAPI()
 
+
 def get_db():
     db = SessionLocal()
     try:
@@ -34,7 +35,7 @@ def push_info():
         return {"Data added successfully"}
 
 
-@app.get("/departments", name='get_departments')
+@app.get("/departments", name="get_departments")
 def read_depart(db: Session = Depends(get_db)):
     departments = db.query(Department).all()
     if not departments:
