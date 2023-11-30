@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import SessionLocal, Session
-from main import Department
+from sqlalchemy.orm import Session
+from src.models import SessionLocal
+from src.models import Department
 
 app = FastAPI()
-
 
 def get_db():
     db = SessionLocal()
@@ -34,7 +34,7 @@ def push_info():
         return {"Data added successfully"}
 
 
-@app.get("/departments")
+@app.get("/departments", name='get_departments')
 def read_depart(db: Session = Depends(get_db)):
     departments = db.query(Department).all()
     if not departments:
@@ -42,7 +42,7 @@ def read_depart(db: Session = Depends(get_db)):
     return departments
 
 
-@app.get("departments/{department_id}")
+@app.get("/departments/{department_id}")
 def get_id(department_id: int, db: Session = Depends(get_db)):
     departments = db.query(Department).filter(Department.id == department_id).all()
-    return {"department_id": department_id}
+    return {"department_id": departments}
