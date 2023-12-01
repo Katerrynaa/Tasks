@@ -6,6 +6,15 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False)
 Base = declarative_base()
 
 
+def db_connect(uri):
+    engine = create_engine(uri)
+    SessionLocal.configure(bind=engine)
+
+
+def db_disconnect():
+    SessionLocal.kw['bind'].dispose()
+
+
 class Department(Base):
     __tablename__ = "departments"
 
