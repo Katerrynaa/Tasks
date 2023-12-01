@@ -1,0 +1,22 @@
+name: departments-checks
+on: [push]
+env:
+  FILES_TO_CHECK: main.py src/
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          sudo apt install build-essential libssl-dev
+          pip install -r requirements.txt
+      - name: Lint
+        run: |
+          black --check $FILES_TO_CHECK
+          ruff $FILES_TO_CHECK
