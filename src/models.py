@@ -12,7 +12,7 @@ def db_connect(uri):
 
 
 def db_disconnect():
-    SessionLocal.kw['bind'].dispose()
+    SessionLocal.kw["bind"].dispose()
 
 
 class Department(Base):
