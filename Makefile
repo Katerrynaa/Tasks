@@ -9,7 +9,7 @@ test:
 	pytest
 
 run:
-	uvicorn main:app --reload
+	python ./main.py
 	echo "-server is running"
 
 format:
