@@ -11,7 +11,7 @@ def create_department(department: dict):
 
 
 @router.get("/", name="get_departments")
-def read_department():
+def read_departments():
     return DepartmentManager.get_info()
 
 
