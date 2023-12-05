@@ -5,20 +5,18 @@ router = APIRouter(prefix="/departments")
 
 
 @router.post("/")
-def create_item(department: dict):
+def create_department(department: dict):
     DepartmentManager.insert_data(data=department)
     return {"Data added successfully"}
 
 
 @router.get("/", name="get_departments")
-def read_depart():
-    department = DepartmentManager.get_info()
-    return department
+def read_department():
+    return DepartmentManager.get_info()
 
 
 @router.get("/{dep_id}")
-def get_id(dep_id: int):
-    department = DepartmentManager.get_id(dep_id)
-    if not department:
-        raise HTTPException(status_code=404, detail="Departments table not found")
+def get_department(dep_id: int):
+    if not (department := DepartmentManager.get_id(dep_id)):
+        raise HTTPException(status_code=404, detail="Departments id table not found")
     return department
