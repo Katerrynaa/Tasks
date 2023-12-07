@@ -1,26 +1,24 @@
-import pytest
+from pytest import fixture
 from fastapi.testclient import TestClient
+
 from main import app
+from src.models import SessionLocal
 
-client = TestClient(app)
 
-@pytest.fixture
-def example_department():
-    return [
-        {
-            "title": "HR",
-            "country_name": "Norway",
-        },
-        {
-            "title": "Sales",
-            "country_name": "USA",
-        },
-        {
-            "title": "Architecture",
-            "country_name": "Poland",
-        },
-        {
-            "title": "IT Support",
-            "country_name": "Sweden",
-        },
-    ]
+@fixture(scope="class")
+def department_data():
+    return {
+        "title": "IT Support",
+        "country_name": "Sweden",
+    }
+
+
+@fixture(scope="session")
+def test_client():
+    return TestClient(app)
+
+
+@fixture(scope="class")
+def test_session():
+    with SessionLocal() as session:
+        yield session

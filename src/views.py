@@ -6,7 +6,7 @@ router = APIRouter(prefix="/departments")
 
 @router.post("/")
 def create(department: dict):
-    DepartmentManager.insert_data(data=department)
+    DepartmentManager.create(data=department)
     return {"Data added successfully"}
 
 
