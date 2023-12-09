@@ -19,7 +19,7 @@ class TestCreateDepartmentView:
         manager_create_mock.assert_called_once_with(data=department_data)
 
     def test_result(self, create_department):
-        assert create_department.json() == {"Data added successfully"}
+        assert create_department.json() == ["Data added successfully"]
 
     def test_status_code(self, create_department):
         assert create_department.status_code == 200
