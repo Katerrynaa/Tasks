@@ -1,11 +1,15 @@
-from src.models import Department, SessionLocal
+from src.models import Department, SessionLocal, db_connect, db_disconnect
 
 
 class DepartmentManager:
     @staticmethod
     def create(data: dict):
         with SessionLocal() as session:
-            session.add(Department(**data))
+            with session.begin():
+                obj = Department(**data)
+                session.add(obj)
+                session.flush()
+                session.refresh(obj)
 
     @staticmethod
     def get_all():

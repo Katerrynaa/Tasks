@@ -5,20 +5,31 @@ import uvicorn
 
 from src.models import db_connect, db_disconnect
 from src.views import router
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    config = read_config()
+    db_connect(config.DATABASE_URL)
+    yield
+    db_disconnect()
+
+
+app = FastAPI(lifespan=lifespan)
 app.include_router(router)
 
 
-@app.on_event("startup")
-def startup():
-    config = read_config()
-    db_connect(config.DATABASE_URL)
+# @app.on_event("startup")
+# def startup():
+#     config = read_config()
+#     db_connect(config.DATABASE_URL)
+#
+#
+# @app.on_event("shutdown")
+# def shutdown():
+#     db_disconnect()
 
-
-@app.on_event("shutdown")
-def shutdown():
-    db_disconnect()
 
 
 if __name__ == "__main__":

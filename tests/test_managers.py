@@ -1,7 +1,8 @@
 from pytest import fixture
+from sqlalchemy import select
 
 from src.managers import DepartmentManager
-from src.models import Department
+from src.models import Department, SessionLocal
 
 
 class TestCreateDepartment:
@@ -9,11 +10,13 @@ class TestCreateDepartment:
     def create(self, department_data):
         return DepartmentManager.create(department_data)
 
-    def test_create(self, department_data, test_session):
-        test_session.query(Department).where(
+    def test_create(self, department_data):
+        query = select(1).select_from(Department).where(
             Department.title == department_data["title"],
             Department.country_name == department_data["country_name"],
-        ).exists()
+        ).exists().select()
+        with SessionLocal() as session:
+            assert session.execute(query).scalar()
 
 
 class TestGetDepartment:
