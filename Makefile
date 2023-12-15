@@ -6,7 +6,7 @@ install:
 	echo "-dependencies installed"
 
 test:
-	pytest
+	pytest -s -v --cov=./ --cov-report term-missing
 
 run:
 	python ./main.py
