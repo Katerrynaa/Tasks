@@ -24,16 +24,20 @@ class TestGetDepartment:
     def get_all(self):
         return DepartmentManager.get_all()
     
-    def test_get_all(self, test_session):
-        test_session.query(Department).all().exists()
+    def test_get_all(self):
+        query = select(1).select_from(Department).exists().select()
+        with SessionLocal() as session:
+            assert session.execute(query).scalar()
 
-
-class TestIdDepartment:
+class TestDepartmentId:
     @fixture(scope="class", autouse=True)
     def get_by_id(self, department_id):
         return DepartmentManager.get_by_id(department_id)
     
-    def test_get_by_id(self, test_session, department_id):
-        test_session.query(Department).filter(
-            Department.id == department_id["id"],
-        ).exists().first()
+    def test_get_by_id(self, department_id):
+        query = select(1).select_from(Department).where(
+            Department.id == department_id['id'],
+        ).exists().select()
+        with SessionLocal() as session:
+            assert session.execute(query).scalar()
+    
