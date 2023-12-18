@@ -12,11 +12,11 @@ def create(department: dict):
 
 @router.get("/", name="get_departments")
 def get_all():
-    return DepartmentManager.get_info()
+    return DepartmentManager.get_all()
 
 
 @router.get("/{dep_id}")
 def get_by_id(dep_id: int):
-    if not (department := DepartmentManager.get_id(dep_id)):
+    if not (department := DepartmentManager.get_by_id(dep_id)):
         raise HTTPException(status_code=404, detail="Departments id table not found")
     return department
