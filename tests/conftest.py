@@ -14,11 +14,10 @@ def department_data():
     }
 
 @fixture(scope="class")
-def department_id():
+def dep_id():
     return {
         "id": "1",
     }
-
 
 @fixture(scope="session", autouse=True)
 def test_db():
