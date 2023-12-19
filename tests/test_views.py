@@ -44,6 +44,7 @@ class TestGetDepartmentView:
     def test_status_code(self, get_all_department):
         assert get_all_department.status_code == 200
 
+
 class TestGetIdDepartmentView:
     @fixture(scope="class")
     def manager_get_by_id_mock(self):
@@ -52,10 +53,13 @@ class TestGetIdDepartmentView:
 
     @fixture(scope="class", autouse=True)
     def get_by_id_department(self, test_client, manager_get_by_id_mock):
-        return test_client.get("/{dep_id}")
+        dep_id = 1
+        DepartmentManager.get_by_id(dep_id)
+        return test_client.get(f"/{dep_id}")
     
-    def test_manager_called(self, manager_get_by_id_mock, dep_id: dict):
-        manager_get_by_id_mock.assert_called_once_with(dep_id['id'])
+    def test_manager_called(self, manager_get_by_id_mock):
+        dep_id = 1
+        manager_get_by_id_mock.assert_called_once_with(dep_id)
 
     def test_result(self, get_by_id_department):
         assert get_by_id_department.json().get('detail', '').casefold() == 'not found'
