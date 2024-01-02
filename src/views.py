@@ -18,5 +18,5 @@ def get_all():
 @router.get("/{dep_id}")
 def get_by_id(dep_id: int):
     if not (department := DepartmentManager.get_by_id(dep_id)):
-        raise HTTPException(status_code=404, detail="Departments id table not found")
+        raise HTTPException(status_code=404, detail="Department with such id not found")
     return department
