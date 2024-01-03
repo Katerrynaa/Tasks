@@ -26,14 +26,24 @@ class TestCreateDepartment:
 
 
 class TestGetDepartment:
+    @fixture(scope="class")
+    def department(self, department_data):
+        return DepartmentManager.create(department_data)
+    
     @fixture(scope="class", autouse=True)
     def get_all(self):
         return DepartmentManager.get_all()
+    
+    def test_amount(self, get_all):
+        assert len(get_all) > 0
 
-    def test_get_all(self):
-        query = select(1).select_from(Department).exists().select()
-        with SessionLocal() as session:
-            assert session.execute(query).scalar()
+    def test_title(self, get_all):
+        for department in get_all:
+            assert department.title 
+    
+    def test_country(self, get_all):
+        for department in get_all:
+            assert department.country_name
 
 
 class TestDepartmentId:
