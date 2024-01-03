@@ -29,15 +29,16 @@ class TestGetDepartment:
         with SessionLocal() as session:
             assert session.execute(query).scalar()
 
+    
 class TestDepartmentId:
     @fixture(scope="class", autouse=True)
     def get_by_id(self, department_id):
         return DepartmentManager.get_by_id(department_id)
     
     def test_get_by_id(self, department_id):
-        query = select(1).select_from(Department).where(
-            Department.id == department_id['id'],
-        ).exists().select()
-        with SessionLocal() as session:
-            assert session.execute(query).scalar()
-    
+        department_id = 1
+        result = DepartmentManager.get_by_id(department_id)
+        assert result.id == department_id
+        
+
+        
