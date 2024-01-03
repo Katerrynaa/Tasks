@@ -27,23 +27,28 @@ class TestCreateDepartment:
 
 class TestGetDepartment:
     @fixture(scope="class")
-    def department(self, department_data):
+    def department_1(self, department_data):
         return DepartmentManager.create(department_data)
+    
+    @fixture(scope="class")
+    def department_2(self, new_department_data):
+        return DepartmentManager.create(new_department_data)
     
     @fixture(scope="class", autouse=True)
     def get_all(self):
         return DepartmentManager.get_all()
     
     def test_amount(self, get_all):
-        assert len(get_all) > 0
-
-    def test_title(self, get_all):
-        for department in get_all:
-            assert department.title 
+        assert len(get_all) == 2
     
-    def test_country(self, get_all):
+    def test_title_department(self, get_all, department_1):
         for department in get_all:
-            assert department.country_name
+            assert department.title == department_1.title
+    
+    def test_country_department(self, get_all, department_1):
+        for department in get_all:
+            assert department.country_name == department_1.country_name
+    
 
 
 class TestDepartmentId:
