@@ -15,5 +15,5 @@ run:
 format:
 	black .
 	echo "-code is formatted with black"
-	ruff .
+	ruff . --fix
 	echo "-code is formatted with ruff"

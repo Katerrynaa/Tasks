@@ -13,11 +13,13 @@ def department_data():
         "country_name": "Sweden",
     }
 
+
 @fixture(scope="class")
 def department_id():
     return {
         "id": 1,
     }
+
 
 @fixture(scope="session", autouse=True)
 def test_db():
