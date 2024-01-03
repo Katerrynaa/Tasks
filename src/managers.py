@@ -1,4 +1,4 @@
-from src.models import Department, SessionLocal, db_connect, db_disconnect
+from src.models import Department, SessionLocal
 
 
 class DepartmentManager:
@@ -10,6 +10,8 @@ class DepartmentManager:
                 session.add(obj)
                 session.flush()
                 session.refresh(obj)
+                session.expunge_all()
+                return obj
 
     @staticmethod
     def get_all():
