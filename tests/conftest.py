@@ -1,9 +1,10 @@
 from pytest import fixture
 from fastapi.testclient import TestClient
+from sqlalchemy import delete
 
 from main import app
 from src.config import read_config
-from src.models import SessionLocal, db_connect, db_disconnect
+from src.models import SessionLocal, db_connect, db_disconnect, Department
 
 
 @fixture(scope="class")
@@ -33,6 +34,13 @@ def test_db():
     db_connect(config.DATABASE_URL)
     yield
     db_disconnect()
+
+
+@fixture(scope="class", autouse=True)
+def clean_db():
+    with SessionLocal() as session:
+        with session.begin():
+            session.execute(delete(Department))
 
 
 @fixture(scope="session")
