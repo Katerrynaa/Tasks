@@ -22,4 +22,4 @@ jobs:
           ruff $FILES_TO_CHECK
       - name: Tests
         run: |
-          	pytest -s -v --cov=./ --cov-report term-missing
+          pytest -s -v --cov=./ --cov-report term-missing

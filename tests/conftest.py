@@ -14,12 +14,14 @@ def department_data():
         "country_name": "Sweden",
     }
 
+
 @fixture(scope="class")
 def new_department_data():
     return {
         "title": "HR",
         "country_name": "Norway",
     }
+
 
 @fixture(scope="class")
 def department_id():
