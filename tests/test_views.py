@@ -45,8 +45,9 @@ class TestGetDepartmentView:
         assert get_all_department.status_code == 200
 
 
-class TestGetIdDepartmentView:
+class TestGetDepartmentByIdView:
     department_id = 1
+
     @fixture(scope="class")
     def manager_get_by_id_mock(self):
         with patch.object(DepartmentManager, "get_by_id") as mock:
@@ -54,13 +55,35 @@ class TestGetIdDepartmentView:
 
     @fixture(scope="class", autouse=True)
     def get_by_id_department(self, test_client, manager_get_by_id_mock):
-        return test_client.get(f"/{self.department_id}")
-    
+        return test_client.get(f"departments/{self.department_id}")
+
     def test_manager_called(self, manager_get_by_id_mock):
         manager_get_by_id_mock.assert_called_once_with(self.department_id)
 
     def test_result(self, get_by_id_department):
-        assert get_by_id_department.json()["detail"].lower() == 'not found'
+        assert get_by_id_department.json() == {}
 
     def test_status_code(self, get_by_id_department):
-        assert get_by_id_department.status_code == 404
+        assert get_by_id_department.status_code == 200
+
+
+class TestGetDepartmentByIdRaiseView:
+    department_id = 1
+
+    @fixture(scope="class")
+    def manager_get_by_id_mock(self):
+        with patch.object(DepartmentManager, "get_by_id") as mock:
+            yield mock
+
+    @fixture(scope="class", autouse=True)
+    def get_by_id_department(self, test_client, manager_get_by_id_mock):
+        return test_client.get(f"departments/{self.department_id}")
+
+    def test_manager_called(self, manager_get_by_id_mock):
+        manager_get_by_id_mock.assert_called_once_with(self.department_id)
+    
+    def test_result(self, get_by_id_department):
+        assert get_by_id_department.json == {}
+
+    def test_raise_status_code(self, get_by_id_department):
+       assert get_by_id_department.status_code == 404
