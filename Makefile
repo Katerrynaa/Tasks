@@ -1,4 +1,4 @@
-.PHONY: install run format test
+.PHONY: install run format test migration migrate-up
 
 install:
 	pip install -r requirements.txt
@@ -13,7 +13,16 @@ run:
 	echo "-server is running"
 
 format:
-	black .
+	black . --exclude '/alembic/'
 	echo "-code is formatted with black"
-	ruff .
+	ruff . --exclude '/alembic/'
 	echo "-code is formatted with ruff"
+
+migration:
+	alembic revision --autogenerate -m "Create table"
+
+
+migrate-up:
+	alembic upgrade head
+
+
