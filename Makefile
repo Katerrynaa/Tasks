@@ -15,7 +15,7 @@ run:
 format:
 	black . --exclude '/alembic/'
 	echo "-code is formatted with black"
-	ruff .
+	ruff . --exclude '/alembic/'
 	echo "-code is formatted with ruff"
 
 migration:
