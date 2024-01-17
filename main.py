@@ -5,21 +5,20 @@ import uvicorn
 
 from src.models import db_connect, db_disconnect
 from src.views import router
-
-app = FastAPI()
-app.include_router(router)
+from contextlib import asynccontextmanager
 
 
-@app.on_event("startup")
-def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):  # pragma: no cover
     config = read_config()
     db_connect(config.DATABASE_URL)
-
-
-@app.on_event("shutdown")
-def shutdown():
+    yield
     db_disconnect()
 
 
-if __name__ == "__main__":
+app = FastAPI(lifespan=lifespan)
+app.include_router(router)
+
+
+if __name__ == "__main__":  # pragma: no cover
     uvicorn.run("main:app", port=5000, log_level="info")

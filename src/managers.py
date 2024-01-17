@@ -5,7 +5,13 @@ class DepartmentManager:
     @staticmethod
     def create(data: dict):
         with SessionLocal() as session:
-            session.add(Department(**data))
+            with session.begin():
+                obj = Department(**data)
+                session.add(obj)
+                session.flush()
+                session.refresh(obj)
+                session.expunge_all()
+                return obj
 
     @staticmethod
     def get_all():

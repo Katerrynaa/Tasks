@@ -6,7 +6,7 @@ install:
 	echo "-dependencies installed"
 
 test:
-	pytest
+	pytest -s -v --cov=./ --cov-report term-missing
 
 run:
 	python ./main.py
@@ -15,5 +15,5 @@ run:
 format:
 	black .
 	echo "-code is formatted with black"
-	ruff .
+	ruff . --fix
 	echo "-code is formatted with ruff"
