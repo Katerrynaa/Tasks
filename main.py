@@ -20,17 +20,5 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(router)
 
 
-# @app.on_event("startup")
-# def startup():
-#     config = read_config()
-#     db_connect(config.DATABASE_URL)
-#
-#
-# @app.on_event("shutdown")
-# def shutdown():
-#     db_disconnect()
-
-
-
 if __name__ == "__main__":
     uvicorn.run("main:app", port=5000, log_level="info")
