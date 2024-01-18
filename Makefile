@@ -18,11 +18,7 @@ format:
 	ruff . --exclude '/alembic/'
 	echo "-code is formatted with ruff"
 
-migration:
-	alembic revision --autogenerate -m "Create table"
-
-
-migrate-up:
+db:
 	alembic upgrade head
 
 
