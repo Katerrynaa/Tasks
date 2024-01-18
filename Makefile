@@ -1,4 +1,4 @@
-.PHONY: install run format test migration migrate-up
+.PHONY: install run format test db
 
 install:
 	pip install -r requirements.txt
@@ -13,9 +13,9 @@ run:
 	echo "-server is running"
 
 format:
-	black . --exclude '/alembic/'
+	black . --exclude /alembic/*
 	echo "-code is formatted with black"
-	ruff . --exclude '/alembic/'
+	ruff . --fix --exclude /alembic/*
 	echo "-code is formatted with ruff"
 
 db:
