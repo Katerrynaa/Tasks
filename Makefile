@@ -21,4 +21,7 @@ format:
 db:
 	alembic upgrade head
 
-
+revision:
+	@read -p "Enter the message: " msg; \
+	msg=`echo $$msg | tr '[ ]' '[_]'`; \
+	alembic revision --autogenerate -m $$msg
