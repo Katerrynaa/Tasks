@@ -1,0 +1,6 @@
+[tool.black]
+exclude = ".venv/"
+
+[tool.pytest.ini_options]
+addopts = "-s -v --cov=./ --cov-report term-missing"
+testpaths = ["tests/"]
