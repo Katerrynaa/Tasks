@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.middleware import print_hello
+from src.middleware import start_session
 
 from src.config import read_config
 import uvicorn
@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):  # pragma: no cover
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(router)
-app.middleware("http")(print_hello)
+app.middleware("http")(start_session)
 
 
 if __name__ == "__main__":  # pragma: no cover
