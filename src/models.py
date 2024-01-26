@@ -1,9 +1,11 @@
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import contextvars
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False)
 Base = declarative_base()
+session_var = contextvars.ContextVar("session")
 
 
 def db_connect(uri):
