@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from dotenv import dotenv_values
+from dotenv import load_dotenv
+import os
 
 
 @dataclass
@@ -8,4 +9,5 @@ class Config:
 
 
 def read_config():
-    return Config(**dotenv_values())
+    load_dotenv()
+    return Config(DATABASE_URL=os.environ.get("DATABASE_URL"))
