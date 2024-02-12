@@ -3,4 +3,4 @@ __pycache__
 *.pyc 
 .venv/
 .coverage
-.alembic.ini
+.idea/
