@@ -2,7 +2,7 @@ from pytest import fixture
 from sqlalchemy import select
 
 from src.managers import DepartmentManager
-from src.models import Department, SessionLocal
+from src.models import Department, db_session
 
 
 class TestCreateDepartment:
@@ -21,8 +21,8 @@ class TestCreateDepartment:
             .exists()
             .select()
         )
-        with SessionLocal() as session:
-            assert session.execute(query).scalar()
+        session = db_session.get()
+        assert session.execute(query).scalar()
 
 
 class TestGetDepartment:
