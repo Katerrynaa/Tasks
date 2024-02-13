@@ -5,6 +5,16 @@ env:
 jobs:
   testing:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: departments
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s
+          --health-retries=3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,6 +30,13 @@ jobs:
         run: |
           black --check $FILES_TO_CHECK
           ruff $FILES_TO_CHECK
+      - name: Migrate db
+        run: |
+          alembic upgrade head
+        env:
+          DATABASE_URL: "mysql+mysqlconnector://root:@localhost:3306/departments"
       - name: Tests
+        env:
+          DATABASE_URL: "mysql+mysqlconnector://root:@localhost:3306/departments"
         run: |
           pytest -s -v --cov=./ --cov-report term-missing
