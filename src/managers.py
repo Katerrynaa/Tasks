@@ -1,4 +1,4 @@
-from src.models import Department, SessionLocal
+from src.models import Department, SessionLocal, db_session
 
 
 class DepartmentManager:
@@ -15,8 +15,7 @@ class DepartmentManager:
 
     @staticmethod
     def get_all():
-        with SessionLocal() as session:
-            return session.query(Department).all()
+        return db_session.query(Department).all()
 
     @staticmethod
     def get_by_id(department_id):
