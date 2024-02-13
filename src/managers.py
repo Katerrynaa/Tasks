@@ -1,4 +1,4 @@
-from src.models import Department, SessionLocal, db_session
+from src.models import Department, db_session
 
 
 class DepartmentManager:
