@@ -1,11 +1,12 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path
 from src.managers import DepartmentManager
+from typing import Annotated
 
 router = APIRouter(prefix="/departments")
 
 
 @router.post("/", status_code=201)
-def create(department: dict):
+def create(department: dict[str, str]):
     DepartmentManager.create(data=department)
     return "Data added successfully"
 
@@ -16,7 +17,10 @@ def get_all():
 
 
 @router.get("/{department_id}")
-def get_by_id(department_id: int):
+def get_by_id(department_id: Annotated[int, Path(title="The ID of the department item")]):
     if not (department := DepartmentManager.get_by_id(department_id)):
         raise HTTPException(status_code=404, detail="Department with such id not found")
     return department
+
+
+
