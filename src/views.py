@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, Query
 from src.managers import DepartmentManager
-from typing import Annotated
+from typing import Annotated, Optional
 
 router = APIRouter(prefix="/departments")
 
@@ -12,7 +12,7 @@ def create(department: dict[str, str]):
 
 
 @router.get("/", name="get_departments")
-def get_all():
+def get_all(title: Optional[str] = Query(None), country_name: Optional[str] = Query(None)):
     return DepartmentManager.get_all()
 
 
