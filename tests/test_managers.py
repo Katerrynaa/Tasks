@@ -21,8 +21,7 @@ class TestCreateDepartment:
             .exists()
             .select()
         )
-        session = db_session.get()
-        assert session.execute(query).scalar()
+        assert db_session.execute(query).scalar()
 
 
 class TestGetDepartment:

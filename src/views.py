@@ -12,15 +12,16 @@ def create(department: dict[str, str]):
 
 
 @router.get("/", name="get_departments")
-def get_all(title: Optional[str] = Query(None), country_name: Optional[str] = Query(None)):
+def get_all(
+    title: Optional[str] = Query(None), country_name: Optional[str] = Query(None)
+):
     return DepartmentManager.get_all()
 
 
 @router.get("/{department_id}")
-def get_by_id(department_id: Annotated[int, Path(title="The ID of the department item")]):
+def get_by_id(
+    department_id: Annotated[int, Path(title="The ID of the department item")]
+):
     if not (department := DepartmentManager.get_by_id(department_id)):
         raise HTTPException(status_code=404, detail="Department with such id not found")
     return department
-
-
-
