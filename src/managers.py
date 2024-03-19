@@ -1,24 +1,20 @@
-from src.models import Department, SessionLocal
+from src.models import Department, db_session
 
 
 class DepartmentManager:
     @staticmethod
     def create(data: dict):
-        with SessionLocal() as session:
-            with session.begin():
-                obj = Department(**data)
-                session.add(obj)
-                session.flush()
-                session.refresh(obj)
-                session.expunge_all()
-                return obj
+        obj = Department(**data)
+        db_session.add(obj)
+        db_session.flush()
+        db_session.refresh(obj)
+        db_session.expunge_all()
+        return obj
 
     @staticmethod
     def get_all():
-        with SessionLocal() as session:
-            return session.query(Department).all()
+        return db_session.query(Department).all()
 
     @staticmethod
     def get_by_id(department_id):
-        with SessionLocal() as session:
-            return session.query(Department).filter_by(id=department_id).first()
+        return db_session.query(Department).filter_by(id=department_id).first()

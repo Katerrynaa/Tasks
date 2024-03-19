@@ -4,7 +4,7 @@ from sqlalchemy import delete
 
 from main import app
 from src.config import read_config
-from src.models import SessionLocal, db_connect, db_disconnect, Department
+from src.models import SessionLocal, db_connect, db_disconnect, Department, session_var
 
 
 @fixture(scope="class")
@@ -38,19 +38,20 @@ def test_db():
     db_disconnect()
 
 
-@fixture(scope="class", autouse=True)
-def clean_db():
-    with SessionLocal() as session:
-        with session.begin():
-            session.execute(delete(Department))
-
-
 @fixture(scope="session")
 def test_client():
     return TestClient(app)
 
 
-@fixture(scope="class")
+@fixture(scope="class", autouse=True)
 def test_session():
     with SessionLocal() as session:
-        yield session
+        with session.begin():
+            token = session_var.set(session)
+            yield session
+            session_var.reset(token)
+
+
+@fixture(scope="class", autouse=True)
+def clean_db(test_session):
+    test_session.execute(delete(Department))
