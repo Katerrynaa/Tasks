@@ -10,39 +10,51 @@ This is simple web application that contains data about departments and their lo
 
 1.Clone the repository
 
+```
 git clone https://github.com/Katerrynaa/Tasks.git
+```
 
 2.Navigate to the project directory
 
+```
 cd test/
+```
 
 3.Create virtual environment
 
+```
 python -m venv .venv
+```
 
 4.Activate virtual environment
 
+```
 source .venv/bin/activate
+```
 
 5.Install requirements
 
+```
 make install
+```
 
 # Run 
 
 Run fastapi server
 
-make run
-
 ```
+make run
+```
+
 
 # Tests
 
 Project has tests to check functionality API. Use this command to run the tests:
 
-make test
-
-
 ```
+make test
+```
+
+
 
 
